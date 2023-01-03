@@ -11,8 +11,10 @@
     "build": "npm run build -w demo-store-core/packages/website",
     "export": "npm run export -w demo-store-core/packages/website",
     "start": "npm run start -w demo-store-core/packages/website",
-    "generate:cnftypes": "env $(awk 'NF > 0 && !/^#/ { print $0 }' .env.local | xargs) contentful-typescript-codegen --output src/types/contentful.ts",
-    "generate:cnffiles": "env $(awk 'NF > 0 && !/^#/ { print $0 }' .env.local | xargs) node -r tsm src/index.ts"
+    "generate-dev:cnftypes": "env $(awk 'NF > 0 && !/^#/ { print $0 }' .env.local | xargs) contentful-typescript-codegen --output src/types/contentful.ts",
+    "generate-dev:cnffiles": "env $(awk 'NF > 0 && !/^#/ { print $0 }' .env.local | xargs) node -r tsm src/index.ts",
+    "generate:cnftypes": "contentful-typescript-codegen --output src/types/contentful.ts",
+    "generate:cnffiles": "node -r tsm src/index.ts"
   },
   "license": "MIT",
   "dependencies": {

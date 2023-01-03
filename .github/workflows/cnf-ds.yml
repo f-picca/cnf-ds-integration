@@ -38,10 +38,21 @@ jobs:
       - name: generate contentful types
         run: |
           npm run generate:cnftypes
+        env:
+          CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
+          CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
+          CONTENTFUL_MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
+          CONTENTFUL_ENVIRONMENT: ${{ secrets.CONTENTFUL_ENVIRONMENT }}
+
 
       - name: generate json files from contentful
         run: |
           npm run generate:cnffiles
+        env:
+          CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
+          CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
+          CONTENTFUL_MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
+          CONTENTFUL_ENVIRONMENT: ${{ secrets.CONTENTFUL_ENVIRONMENT }}
 
   test:
     needs: [generate-files]
