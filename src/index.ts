@@ -1,4 +1,3 @@
-import type {RawDataTaxon} from '../demo-store-core/packages/types/src'
 import { mkdirSync, readFileSync, writeFileSync } from 'fs'
 import { resolve } from 'path'
 import type {ITaxonFields, ITaxonomyFields, ICatalogFields, ICountryFields, ILanguageFields, IProductFields, CONTENTFUL_DEFAULT_LOCALE_CODE} from './types/contentful'
