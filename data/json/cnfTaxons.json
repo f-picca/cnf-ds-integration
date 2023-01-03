@@ -1,0 +1,25 @@
+[
+  {
+    "id": "taxon_1",
+    "label": "Accessories",
+    "description": "All accessories",
+    "slug": "/accessories",
+    "name": "All Accessories",
+    "taxons": [
+      "taxon_3"
+    ]
+  },
+  {
+    "id": "taxon_3",
+    "label": "all hats",
+    "slug": "/accessories/hats",
+    "name": "All hats"
+  },
+  {
+    "id": "taxon_2",
+    "label": "Baby",
+    "description": "All products for babies",
+    "slug": "/baby",
+    "name": "All product for Babies"
+  }
+]
