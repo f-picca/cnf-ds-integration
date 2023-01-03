@@ -5,9 +5,6 @@ import type {ITaxonFields, ITaxonomyFields, ICatalogFields, ICountryFields, ILan
 import * as Contentful from 'contentful'
 import ContentfulService from './utils/contentful_service'
 
-import * as dotenv from 'dotenv' 
-dotenv.config()
-
 const DEFAULT_LOCALE:CONTENTFUL_DEFAULT_LOCALE_CODE = "en"
 
 /*

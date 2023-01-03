@@ -1,5 +1,4 @@
 import { createClient } from "contentful";
-import { config } from "dotenv";
 
 /*
  * We tell TypeScript that those environment variables are always defined.
@@ -14,8 +13,6 @@ declare global {
     }
   }
 }
-
-config();
 
 export default class ContentfulService {
   static get instance() {
