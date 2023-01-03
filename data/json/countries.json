@@ -1,5 +1,15 @@
 [
   {
+    "name": "United Kingdom",
+    "code": "GB",
+    "market": 12110,
+    "catalog": "catalog_2",
+    "region": "Europe",
+    "languages": [
+      "en"
+    ]
+  },
+  {
     "name": "Italy",
     "code": "IT",
     "market": 12108,
