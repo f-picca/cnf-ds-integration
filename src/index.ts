@@ -120,23 +120,3 @@ function adjustLocales(object){
   writeFileSync(resolve(jsonPath, 'languages.json'), JSON.stringify(languages, null, 2))
     
 })()
-
-/*
-;(async () => {
-  const products = (
-    await ContentfulService.instance.getEntriesByType<IProductFields>("product")
-  )
-  .map((entry) => entry.fields)
-  .map((product) => adjustLocales(product))
-  .map(product => ({
-      ...product
-      }
-  ))
-  
-  
-  const jsonPath = resolve(__dirname, '../data', 'json')
-
-  writeFileSync(resolve(jsonPath, 'cnfProducts.json'), JSON.stringify(products, null, 2))
-    
-})()
-*/
