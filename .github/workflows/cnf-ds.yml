@@ -23,8 +23,13 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: run test
-        run: echo "ciao"
+      - name: generate contentful types
+        run: |
+          npm run generate:cnftypes
+
+      - name: generate json files from contentful
+        run: |
+          npm run generate:cnffiles
 
   test:
     runs-on: ubuntu-latest
