@@ -43,11 +43,11 @@ export interface ICountryFields {
   /** catalog */
   catalog: ICatalog;
 
-  /** default_language */
-  default_language?: string | undefined;
-
   /** region */
   region?: Entry<{ [fieldId: string]: unknown }> | undefined;
+
+  /** languages */
+  languages?: Entry<{ [fieldId: string]: unknown }>[] | undefined;
 }
 
 export interface ICountry extends Entry<ICountryFields> {
@@ -60,6 +60,34 @@ export interface ICountry extends Entry<ICountryFields> {
     contentType: {
       sys: {
         id: "country";
+        linkType: "ContentType";
+        type: "Link";
+      };
+    };
+  };
+}
+
+export interface ILanguageFields {
+  /** name */
+  name?: string | undefined;
+
+  /** code */
+  code?: string | undefined;
+
+  /** catalog */
+  catalog?: Entry<{ [fieldId: string]: unknown }> | undefined;
+}
+
+export interface ILanguage extends Entry<ILanguageFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: "language";
         linkType: "ContentType";
         type: "Link";
       };
@@ -256,6 +284,7 @@ export interface IVariant extends Entry<IVariantFields> {
 export type CONTENT_TYPE =
   | "catalog"
   | "country"
+  | "language"
   | "product"
   | "region"
   | "size"
@@ -266,6 +295,7 @@ export type CONTENT_TYPE =
 export type IEntry =
   | ICatalog
   | ICountry
+  | ILanguage
   | IProduct
   | IRegion
   | ISize
@@ -273,6 +303,6 @@ export type IEntry =
   | ITaxonomy
   | IVariant;
 
-export type LOCALE_CODE = "en-US" | "it-IT";
+export type LOCALE_CODE = "en" | "it";
 
-export type CONTENTFUL_DEFAULT_LOCALE_CODE = "en-US";
+export type CONTENTFUL_DEFAULT_LOCALE_CODE = "en";

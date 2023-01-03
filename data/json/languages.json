@@ -1,12 +1,12 @@
 [
   {
-    "name": "English",
-    "code": "en",
-    "catalog": "AMER"
-  },
-  {
     "name": "Italiano",
     "code": "it",
-    "catalog": "AMER"
+    "catalog": "catalog_2"
+  },
+  {
+    "name": "English",
+    "code": "en",
+    "catalog": "catalog_1"
   }
 ]
