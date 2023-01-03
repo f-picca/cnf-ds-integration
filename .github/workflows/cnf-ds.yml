@@ -19,9 +19,12 @@ concurrency:
 
 jobs:
   generate-files:
+    name: Generate Files from Contenful Data
     runs-on: ubuntu-latest
-    - name: run test
-      run: echo "ciao"
+    
+    steps:
+      - name: run test
+        run: echo "ciao"
 
   test:
     runs-on: ubuntu-latest
