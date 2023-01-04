@@ -19,7 +19,6 @@ function adjustLocales(object){
   return object
 }
 
-
 ;(async () => {
   const taxons = (
     await ContentfulService.instance.getEntriesByType<ITaxonFields>("taxon")
