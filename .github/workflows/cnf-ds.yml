@@ -77,6 +77,10 @@ jobs:
       - name: Install 📦
         run: npm ci
 
+      - name: Check for files
+        run: |
+          ls -al ../../../data/json
+
       - name: Validate JSON Data 🔎
         run: |
           npm run test:data -ws --if-present
