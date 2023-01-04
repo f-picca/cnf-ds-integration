@@ -79,7 +79,7 @@ jobs:
 
       - name: Check for files
         run: |
-          ls -al ./data/json/taxons.json
+          cat ./data/json/taxons.json
 
       - name: Validate JSON Data 🔎
         run: |
