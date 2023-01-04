@@ -79,7 +79,7 @@ jobs:
 
       - name: Check for files
         run: |
-          ls -al ../../../data/json
+          ls -al 
 
       - name: Validate JSON Data 🔎
         run: |
