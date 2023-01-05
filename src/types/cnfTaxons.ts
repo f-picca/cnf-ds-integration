@@ -1,39 +1,34 @@
+import { RawDataTaxon } from '@commercelayer/demo-store-types'
 import { z } from 'zod'
+import { extractLocalizedField, extractOptionalLocalizedField, localizedField } from '../utils/helpers'
+import { cnfEntry_schema } from './cnfEntry'
+import { cnfProduct_schema } from './cnfProducts'
 
-const localizedField = <T extends z.ZodTypeAny>(type: T) =>
-  z.object({}).catchall(type);
+export const cnfTaxon_schema: z.ZodType<RawDataTaxon, z.ZodTypeDef, unknown> = z.lazy(
+  () => {
+    const partialTaxon_schema = z.object({
+      id: extractLocalizedField(z.string()),
+      name: extractLocalizedField(z.string()),
+      label: localizedField((z.string())),
+      description: localizedField((z.string())),
+      slug: extractLocalizedField(z.string()).transform(slug => slug.replace(/^\//, '')),
+      references: extractOptionalLocalizedField(cnfEntry_schema(cnfProduct_schema).array())
+        .transform(products => products ? products.map(product => product.fields.name) : [])
+    })
 
-const extractLocalizedField = <T extends z.ZodTypeAny>(type: T) =>
-  localizedField(type).transform((value, ctx) => {
-    const id = Object.values(value)[0];
+    return partialTaxon_schema.extend({
+      taxons: extractOptionalLocalizedField(cnfEntry_schema(partialTaxon_schema).array())
+        .transform(taxons => {
+          if (taxons) {
+            return taxons.map(taxon => taxon.fields.id)
+          }
 
-    if (id === undefined) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "ID is required"
-      });
+          return
+        })
+    })
+  }
+)
 
-      return z.NEVER;
-    }
-
-    return id;
-  });
-
-const cnfTaxon_schema = z.object({
-  id: localizedField(z.string()).transform(id => Object.values(id)[0]),
-  name: localizedField((z.string())).transform(name => Object.values(name)[0]),
-  label: localizedField((z.string())),
-  description: localizedField((z.string())),
-  slug: localizedField(z.string()).transform(id => Object.values(id)[0]).transform(slug => slug.replace(/^\//, '')),
-  references: localizedField(z.any())
-    .transform(references => Object.values(references)[0])
-    .transform(references => references.map(reference => reference.fields.name)),
-  taxons: localizedField(z.any())
-    .transform(taxons => Object.values(taxons)[0])
-    .transform(taxons => taxons.map(taxon => taxon.fields.name))
-})
-
-export const cnfTaxons_schema = cnfTaxon_schema.array()
-
-
+export const cnfTaxons_schema = cnfEntry_schema(cnfTaxon_schema)
+  .transform(cnfTaxons => cnfTaxons.fields).array()
 

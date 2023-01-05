@@ -1,19 +1,38 @@
 [
   {
+    "id": "taxon_3",
+    "name": "All hats",
+    "label": {
+      "en": "all hats",
+      "it": "tutti i cappelli"
+    },
+    "description": {
+      "en": "All products for hats"
+    },
+    "slug": "accessories/hats",
+    "references": [
+      "My Test Product"
+    ]
+  },
+  {
     "id": "taxon_2",
+    "name": "All product for Babies",
     "label": {
       "en": "Baby",
       "it": "Baby"
     },
     "description": {
-      "en": "All products for babies",
+      "en": "All products for babies ",
       "it": "Tutti i prodotti per bambini"
     },
-    "slug": "/baby",
-    "name": "All product for Babies"
+    "slug": "baby",
+    "references": [
+      "My Test Product"
+    ]
   },
   {
     "id": "taxon_1",
+    "name": "All Accessories",
     "label": {
       "en": "Accessories",
       "it": "Accessori"
@@ -22,19 +41,10 @@
       "en": "All accessories",
       "it": "Tutti gli accessori"
     },
-    "slug": "/accessories",
-    "name": "All Accessories",
+    "slug": "accessories",
+    "references": [],
     "taxons": [
       "taxon_3"
     ]
-  },
-  {
-    "id": "taxon_3",
-    "label": {
-      "en": "all hats",
-      "it": "tutti i cappelli"
-    },
-    "slug": "/accessories/hats",
-    "name": "All hats"
   }
 ]

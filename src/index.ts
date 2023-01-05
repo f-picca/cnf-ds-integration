@@ -1,10 +1,11 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'fs'
+import { RawDataTaxon } from '@commercelayer/demo-store-types'
+import { writeFileSync } from 'fs'
 import { resolve } from 'path'
-import type {ITaxonFields, ITaxonomyFields, ICatalogFields, ICountryFields, ILanguageFields, IProductFields, CONTENTFUL_DEFAULT_LOCALE_CODE} from './types/contentful'
-import * as Contentful from 'contentful'
+import { cnfTaxons_schema } from './types/cnfTaxons'
+import type { CONTENTFUL_DEFAULT_LOCALE_CODE, ICatalogFields, ICountryFields, ILanguageFields, ITaxonomyFields } from './types/contentful'
 import ContentfulService from './utils/contentful_service'
 
-const DEFAULT_LOCALE:CONTENTFUL_DEFAULT_LOCALE_CODE = "en"
+const DEFAULT_LOCALE: CONTENTFUL_DEFAULT_LOCALE_CODE = "en"
 
 /*
  * if there's only one locale we assume is the default: 
@@ -20,21 +21,13 @@ function adjustLocales(object){
 }
 
 ;(async () => {
-  const taxons = (
-    await ContentfulService.instance.getEntriesByType<ITaxonFields>("taxon")
-  )
-  .map((entry) => entry.fields)
-  .map((taxon) => adjustLocales(taxon))
-  .map(taxon => ({
-      ...taxon,
-      "taxons": taxon.taxons?.map(taxon => taxon.fields.id)
-      }
-  ))
-  
+  const taxons = await ContentfulService.instance.getEntriesByType("taxon")
+
+  const result: RawDataTaxon[] = cnfTaxons_schema.parse(taxons)
+
   const jsonPath = resolve(__dirname, '../data', 'json')
 
-  writeFileSync(resolve(jsonPath, 'taxons.json'), JSON.stringify(taxons, null, 2))
-    
+  writeFileSync(resolve(jsonPath, 'taxons.json'), JSON.stringify(result, null, 2))
 })()
 
 
