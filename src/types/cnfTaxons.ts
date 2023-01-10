@@ -2,7 +2,7 @@ import { RawDataTaxon } from '@commercelayer/demo-store-types'
 import { z } from 'zod'
 import { extractLocalizedField, extractOptionalLocalizedField, localizedField } from '../utils/helpers'
 import { cnfEntry_schema } from './cnfEntry'
-import { cnfProduct_schema } from './cnfProducts'
+import { cnfProducts_schema, cnfProduct_schema } from './cnfProducts'
 
 export const cnfTaxon_schema: z.ZodType<RawDataTaxon, z.ZodTypeDef, unknown> = z.lazy(
   () => {
@@ -13,7 +13,7 @@ export const cnfTaxon_schema: z.ZodType<RawDataTaxon, z.ZodTypeDef, unknown> = z
       description: localizedField((z.string())),
       slug: extractLocalizedField(z.string()).transform(slug => slug.replace(/^\//, '')),
       references: extractOptionalLocalizedField(cnfEntry_schema(cnfProduct_schema).array())
-        .transform(products => products ? products.map(product => product.fields.name) : [])
+        .transform(products => products ? products.map(product => product.fields.skus).flat(1) : [])
     })
 
     return partialTaxon_schema.extend({
