@@ -1,5 +1,22 @@
 [
   {
+    "id": "taxon_1",
+    "name": "All Accessories",
+    "label": {
+      "en": "Accessories",
+      "it": "Accessori"
+    },
+    "description": {
+      "en": "All accessories",
+      "it": "Tutti gli accessori"
+    },
+    "slug": "accessories",
+    "references": [],
+    "taxons": [
+      "taxon_3"
+    ]
+  },
+  {
     "id": "taxon_3",
     "name": "All hats",
     "label": {
@@ -11,7 +28,24 @@
     },
     "slug": "accessories/hats",
     "references": [
-      "My Test Product"
+      "5PANECAP000000FFFFFFXXXX"
+    ]
+  },
+  {
+    "id": "taxon_6",
+    "name": "All Products for Men",
+    "label": {
+      "en": "Men",
+      "it": "Uomo"
+    },
+    "description": {
+      "en": "All products for men",
+      "it": "Tutti i prodotti da uomo"
+    },
+    "slug": "men",
+    "references": [
+      "HOODIEMX000000FFFFFFLXXX",
+      "HOODIEMX000000FFFFFFMXXX"
     ]
   },
   {
@@ -27,24 +61,7 @@
     },
     "slug": "baby",
     "references": [
-      "My Test Product"
-    ]
-  },
-  {
-    "id": "taxon_1",
-    "name": "All Accessories",
-    "label": {
-      "en": "Accessories",
-      "it": "Accessori"
-    },
-    "description": {
-      "en": "All accessories",
-      "it": "Tutti gli accessori"
-    },
-    "slug": "accessories",
-    "references": [],
-    "taxons": [
-      "taxon_3"
+      "BABYBIBXA19D9D000000XXXX"
     ]
   }
 ]
