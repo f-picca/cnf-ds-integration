@@ -29,7 +29,7 @@ export default class ContentfulService {
       await this.client.getEntries<T>({
         content_type: type,
         locale: '*',
-        include: 2
+        include: 10
       })
     ).items;
   }

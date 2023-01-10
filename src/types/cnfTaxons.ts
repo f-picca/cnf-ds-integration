@@ -13,7 +13,9 @@ export const cnfTaxon_schema: z.ZodType<RawDataTaxon, z.ZodTypeDef, unknown> = z
       description: localizedField((z.string())),
       slug: extractLocalizedField(z.string()).transform(slug => slug.replace(/^\//, '')),
       references: extractOptionalLocalizedField(cnfEntry_schema(cnfProduct_schema).array())
-        .transform(products => products ? products.map(product => product.fields.skus).flat(1) : [])
+        .transform(products => products ? products
+            .flatMap(product => product.fields.skus
+                .map(sku=>sku.fields.code)) : [])
     })
 
     return partialTaxon_schema.extend({

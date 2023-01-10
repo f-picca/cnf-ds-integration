@@ -40,3 +40,23 @@ export const extractOptionalLocalizedField = <T extends z.ZodTypeAny>(type: T) =
     return id!
   })
 }
+
+export enum OPERATIONS {
+  fetch,
+  write,
+  done,
+}
+
+export function logger({ who, what }: { who: string; what: OPERATIONS }): void{
+  switch(what){
+    case OPERATIONS.fetch: 
+      console.log(who + "🚚 getting data from contentful...")
+      break;
+    case OPERATIONS.write:  
+      console.log(who + "✍️ writing products file...")
+      break;
+    case OPERATIONS.done:
+      console.log(who + "🍺 done")
+      break;
+  }  
+}

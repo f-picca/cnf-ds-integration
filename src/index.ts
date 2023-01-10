@@ -1,123 +1,132 @@
-import { RawDataTaxon } from '@commercelayer/demo-store-types'
+import { RawDataTaxon,RawDataProduct, RawDataTaxonomy, RawDataCatalog, RawDataLanguage, RawDataCountry } from '@commercelayer/demo-store-types'
 import { writeFileSync } from 'fs'
 import { resolve } from 'path'
 import { cnfTaxons_schema } from './types/cnfTaxons'
-import { cnfProduct_schema,cnfProducts_schema } from './types/cnfProducts'
-import type { CONTENTFUL_DEFAULT_LOCALE_CODE, ICatalogFields, ICountryFields, ILanguageFields, ITaxonomyFields } from './types/contentful'
+import { cnfTaxonomies_schema } from './types/cnfTaxonomies'
+import { cnfProducts_schema } from './types/cnfProducts'
+import { cnfCatalogs_schema } from './types/cnfCatalogs'
+import { cnfLanguages_schema } from './types/cnfLanguages'
+import { cnfCountries_schema } from './types/cnfCountries'
+import { OPERATIONS, logger }  from './utils/helpers'
 import ContentfulService from './utils/contentful_service'
 
-const DEFAULT_LOCALE: CONTENTFUL_DEFAULT_LOCALE_CODE = "en"
-
-
-/*
- * if there's only one locale we assume is the default: 
- * - replace the value with the default locale one
- */
-/*
-function adjustLocales(object){
-  Object.keys(object).forEach((key) => {
-    if(Object.keys(object[key]).length == 1){ 
-      object[key] = object[key][DEFAULT_LOCALE]
-    }
-  })
-  return object
-}
-*/
-
-// ;(async () => {
-//  const products = await ContentfulService.instance.getEntriesByType("product")
-//  const result  = cnfProducts_schema.parse(products);
- 
-// })()
 
 ;(async () => {
+  const _WHO_ = "[📦 Products 📦]"
+  logger({ who: _WHO_, what: OPERATIONS.fetch })
+
+  const products = await ContentfulService.instance.getEntriesByType("product")
+  const result  = cnfProducts_schema.parse(products)
+
+  
+  const converted: RawDataProduct[] = result
+    .flatMap(cnfProduct => cnfProduct.skus
+      .map(
+        cnfSku => ({
+          name: cnfProduct.name,
+          productCode: cnfProduct.baseProductId,
+          variantCode: cnfProduct.code,
+          sku: cnfSku.fields.code,
+          slug: cnfSku.fields.slug,
+          color: cnfProduct.color,
+          size: cnfSku.fields.size,
+          description: cnfProduct.description,
+          images: cnfProduct.images,
+        })
+  ))
+
+  logger({ who: _WHO_, what: OPERATIONS.write })
+  
+  const jsonPath = resolve(__dirname, '../data', 'json')
+  
+  writeFileSync(resolve(jsonPath, 'products.json'), JSON.stringify(converted, null, 2))
+  
+  logger({ who: _WHO_, what: OPERATIONS.done })
+})()
+
+;(async () => {
+  const _WHO_ = "[🍃 Taxons 🍃]"
+  logger({ who: _WHO_, what: OPERATIONS.fetch })
+
+
   const taxons = await ContentfulService.instance.getEntriesByType("taxon")
   
   const result: RawDataTaxon[] = cnfTaxons_schema.parse(taxons)
 
+  logger({ who: _WHO_, what: OPERATIONS.write })
   const jsonPath = resolve(__dirname, '../data', 'json')
 
   writeFileSync(resolve(jsonPath, 'taxons.json'), JSON.stringify(result, null, 2))
   
+  logger({ who: _WHO_, what: OPERATIONS.done })
 })()
 
 
-/*
-;(async () => {
-  const taxonomies = (
-    await ContentfulService.instance.getEntriesByType<ITaxonomyFields>("taxonomy")
-  )
-  .map((entry) => entry.fields)
-  .map((taxonomy) => adjustLocales(taxonomy))
-  .map(taxonomy => ({
-      ...taxonomy,
-      "taxons": taxonomy.taxons?.map(taxon => adjustLocales(taxon.fields).id)
-      }
-  ))
-  
-  const jsonPath = resolve(__dirname, '../data', 'json')
-
-  writeFileSync(resolve(jsonPath, 'taxonomies.json'), JSON.stringify(taxonomies, null, 2))
-    
-})()
 
 ;(async () => {
-  const catalogs = (
-    await ContentfulService.instance.getEntriesByType<ICatalogFields>("catalog")
-  )
-  .map((entry) => entry.fields)
-  .map((catalog) => adjustLocales(catalog))
-  .map(catalog => ({
-      ...catalog,
-      "taxonomies": catalog.taxonomies?.map(taxonomy => adjustLocales(taxonomy.fields).id)
-      }
-  ))
+  const _WHO_ = "[🌳 Taxonomies 🌳]"
+  logger({ who: _WHO_, what: OPERATIONS.fetch })
   
+  const taxonomies = await ContentfulService.instance.getEntriesByType("taxonomy")
+  
+  const result: RawDataTaxonomy[] = cnfTaxonomies_schema.parse(taxonomies)
+  
+  logger({ who: _WHO_, what: OPERATIONS.write })
   const jsonPath = resolve(__dirname, '../data', 'json')
 
-  writeFileSync(resolve(jsonPath, 'catalogs.json'), JSON.stringify(catalogs, null, 2))
-    
+  writeFileSync(resolve(jsonPath, 'taxonomies.json'), JSON.stringify(result, null, 2))
+  logger({ who: _WHO_, what: OPERATIONS.done })  
 })()
 
 
 ;(async () => {
-  const countries = (
-    await ContentfulService.instance.getEntriesByType<ICountryFields>("country")
-  )
-  .map((entry) => entry.fields)
-  .map((country) => adjustLocales(country))
-  .map(country => ({
-      ...country,
-      "market" : Number(country.market),
-      "catalog": adjustLocales(country.catalog.fields).id,
-      "region": adjustLocales(country.region.fields).name,
-      "languages": country.languages.map(language => adjustLocales( language.fields).code)  
-      }
-  ))
+  const _WHO_ = "[📖 Catalogs 📖]"
+  logger({ who: _WHO_, what: OPERATIONS.fetch })
   
+  const catalogs = await ContentfulService.instance.getEntriesByType("catalog")
   
+  const result: RawDataCatalog[] = cnfCatalogs_schema.parse(catalogs)
+  
+  logger({ who: _WHO_, what: OPERATIONS.write })
   const jsonPath = resolve(__dirname, '../data', 'json')
 
-  writeFileSync(resolve(jsonPath, 'countries.json'), JSON.stringify(countries, null, 2))
-    
+  writeFileSync(resolve(jsonPath, 'catalogs.json'), JSON.stringify(result, null, 2))
+  logger({ who: _WHO_, what: OPERATIONS.done })      
 })()
+
 
 ;(async () => {
-  const languages = (
-    await ContentfulService.instance.getEntriesByType<ILanguageFields>("language")
-  )
-  .map((entry) => entry.fields)
-  .map((language) => adjustLocales(language))
-  .map(language => ({
-      ...language,
-      "catalog": adjustLocales(language.catalog.fields).id,
-      }
-  ))
+  const _WHO_ = "[🆎 Languages 🆎]"
+  logger({ who: _WHO_, what: OPERATIONS.fetch })
   
+  const languages = await ContentfulService.instance.getEntriesByType("language")
   
+  const result: RawDataLanguage[] = cnfLanguages_schema.parse(languages)
+  
+  logger({ who: _WHO_, what: OPERATIONS.write })
   const jsonPath = resolve(__dirname, '../data', 'json')
 
-  writeFileSync(resolve(jsonPath, 'languages.json'), JSON.stringify(languages, null, 2))
-    
+  writeFileSync(resolve(jsonPath, 'languages.json'), JSON.stringify(result, null, 2))
+  logger({ who: _WHO_, what: OPERATIONS.done })        
 })()
-*/
+
+
+;(async () => {
+  const _WHO_ = "[🌎 Countries 🌎]"
+  logger({ who: _WHO_, what: OPERATIONS.fetch })
+  
+  const countries = await ContentfulService.instance.getEntriesByType("country")
+  
+  const result: RawDataCountry[] = cnfCountries_schema.parse(countries)
+  
+  logger({ who: _WHO_, what: OPERATIONS.write })
+  const jsonPath = resolve(__dirname, '../data', 'json')
+
+  writeFileSync(resolve(jsonPath, 'countries.json'), JSON.stringify(result, null, 2))
+  logger({ who: _WHO_, what: OPERATIONS.done })        
+})()
+
+
+
+
+

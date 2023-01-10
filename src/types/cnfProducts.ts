@@ -11,7 +11,7 @@ const cnfSKU_schema = z.object ({
 })
 
 export const cnfProduct_schema = z.object({
-  name: extractLocalizedField(z.string()),
+  name: localizedField(z.string()),
   code: extractLocalizedField(z.string()),
   baseProductId: extractLocalizedField(z.string()),
   description: localizedField((z.string())),
@@ -19,8 +19,6 @@ export const cnfProduct_schema = z.object({
     .transform(images => images.map(image => image.fields.file.url)),
   color: extractLocalizedField(z.string()),
   skus:   extractLocalizedField(cnfEntry_schema(cnfSKU_schema).array())
-    .transform(skus => skus.map(sku => sku.fields.code))
-
 })
 
 export const cnfProducts_schema = cnfEntry_schema(cnfProduct_schema)

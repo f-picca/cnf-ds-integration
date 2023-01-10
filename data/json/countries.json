@@ -3,30 +3,30 @@
     "name": "United Kingdom",
     "code": "GB",
     "market": 12110,
-    "catalog": "catalog_2",
     "region": "Europe",
     "languages": [
       "en"
-    ]
+    ],
+    "catalog": "catalog_2"
   },
   {
     "name": "Italy",
     "code": "IT",
     "market": 12108,
-    "catalog": "catalog_2",
     "region": "Europe",
     "languages": [
       "it"
-    ]
+    ],
+    "catalog": "catalog_2"
   },
   {
     "name": "United States",
     "code": "US",
     "market": 12109,
-    "catalog": "catalog_1",
     "region": "Americas",
     "languages": [
       "en"
-    ]
+    ],
+    "catalog": "catalog_1"
   }
 ]
