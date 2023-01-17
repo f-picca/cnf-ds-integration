@@ -17,79 +17,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  generate-files:
-    name: Generate Files from Contenful Data
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
 
-      - name: Node 🧰
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: "npm"
-
-      - name: Install 📦
-        run: npm ci
-
-      - name: generate contentful types
-        run: |
-          npm run generate:cnftypes
-        env:
-          CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
-          CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
-          CONTENTFUL_MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
-          CONTENTFUL_ENVIRONMENT: ${{ secrets.CONTENTFUL_ENVIRONMENT }}
-
-
-      - name: generate json files from contentful
-        run: |
-          npm run generate:cnffiles
-        env:
-          CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
-          CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
-          CONTENTFUL_MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
-          CONTENTFUL_ENVIRONMENT: ${{ secrets.CONTENTFUL_ENVIRONMENT }}
-
-  test:
-    needs: [generate-files]
+  build:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node: [16.x, 18.x]
-
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
-
-      - name: Node 🧰
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node }}
-          cache: "npm"
-
-      - name: Install 📦
-        run: npm ci
-
-      - name: Check for files
-        run: |
-          cat ./data/json/taxons.json
-
-      - name: Validate JSON Data 🔎
-        run: |
-          npm run test:data -ws --if-present
-        env:
-          NEXT_PUBLIC_JSON_DATA_FOLDER: ../../../data/json/
-
-  build:
-    needs: [test]
-    runs-on: ubuntu-latest
 
     if: github.ref == 'refs/heads/master'
 
@@ -119,6 +53,25 @@ jobs:
 
       - name: Install 📦
         run: npm ci
+      
+      - name: generate json files from contentful 🚚
+        run: |
+          npm run generate:cnffiles
+        env:
+          CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
+          CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
+          CONTENTFUL_MANAGEMENT_TOKEN: ${{ secrets.CONTENTFUL_MANAGEMENT_TOKEN }}
+          CONTENTFUL_ENVIRONMENT: ${{ secrets.CONTENTFUL_ENVIRONMENT }}
+
+      - name: Check for files 
+        run: |
+          cat ./data/json/taxons.json
+
+      - name: Validate JSON Data 🔎
+        run: |
+          npm run test:data -ws --if-present
+        env:
+          NEXT_PUBLIC_JSON_DATA_FOLDER: ../../../data/json/
 
       - name: Build 🔧
         run: |
@@ -141,6 +94,8 @@ jobs:
   deploy:
     needs: [build]
     runs-on: ubuntu-latest
+
+    
 
     environment:
       name: github-pages
