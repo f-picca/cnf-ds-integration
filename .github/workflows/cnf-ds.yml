@@ -21,10 +21,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node: [16.x, 18.x]
-
     if: github.ref == 'refs/heads/master'
 
     steps:
