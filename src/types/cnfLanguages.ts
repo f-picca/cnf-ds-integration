@@ -8,7 +8,7 @@ export const cnfLanguage_schema: z.ZodType<RawDataLanguage, z.ZodTypeDef, unknow
    code: extractLocalizedField(z.string()),
    name: extractLocalizedField(z.string()),
    catalog: extractLocalizedField(cnfEntry_schema(cnfCatalog_schema))
-    .transform(catalog => catalog.fields.id)
+    .transform(catalog => catalog.fields.name)
 })
 
 export const cnfLanguages_schema = cnfEntry_schema(cnfLanguage_schema)

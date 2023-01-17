@@ -19,7 +19,7 @@ export const cnfCountry_schema: z.ZodType<RawDataCountry, z.ZodTypeDef, unknown>
    languages: extractLocalizedField(cnfEntry_schema(cnfLanguage_schema).array())
     .transform(languages => languages.map(language => language.fields.code)),
    catalog: extractLocalizedField(cnfEntry_schema(cnfCatalog_schema))
-   .transform(catalog => catalog.fields.id) 
+   .transform(catalog => catalog.fields.name) 
 })
 
 export const cnfCountries_schema = cnfEntry_schema(cnfCountry_schema)

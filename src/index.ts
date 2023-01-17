@@ -1,4 +1,4 @@
-import { RawDataTaxon,RawDataProduct, RawDataTaxonomy, RawDataCatalog, RawDataLanguage, RawDataCountry } from '@commercelayer/demo-store-types'
+import { RawDataTaxon,RawDataProduct, RawDataTaxonomy, RawDataCatalog, RawDataLanguage, RawDataCountry, RawDataPage, RawDataLocalizedPage } from '@commercelayer/demo-store-types'
 import { writeFileSync } from 'fs'
 import { resolve } from 'path'
 import { cnfTaxons_schema } from './types/cnfTaxons'
@@ -7,11 +7,11 @@ import { cnfProducts_schema } from './types/cnfProducts'
 import { cnfCatalogs_schema } from './types/cnfCatalogs'
 import { cnfLanguages_schema } from './types/cnfLanguages'
 import { cnfCountries_schema } from './types/cnfCountries'
+import { cnfLocalizedPages_schema } from './types/cnfLocalizedPage'
 import { OPERATIONS, logger }  from './utils/helpers'
 import ContentfulService from './utils/contentful_service'
 
-
-;(async () => {
+(async () => {
   const _WHO_ = "[📦 Products 📦]"
   logger({ who: _WHO_, what: OPERATIONS.fetch })
 
@@ -127,6 +127,20 @@ import ContentfulService from './utils/contentful_service'
 })()
 
 
+;(async () => {
+  const _WHO_ = "[📄 Contents 📄]"
+  logger({ who: _WHO_, what: OPERATIONS.fetch })
 
+  const pages = await ContentfulService.instance.getEntriesByType("localizedPage")
+  
+  const result = cnfLocalizedPages_schema.parse(pages)
 
+  logger({ who: _WHO_, what: OPERATIONS.write })
 
+  const jsonPath = resolve(__dirname, '../data', 'json')
+  
+  writeFileSync(resolve(jsonPath, 'pages.json'), JSON.stringify(result, null, 2))
+  
+  logger({ who: _WHO_, what: OPERATIONS.done })
+
+})()

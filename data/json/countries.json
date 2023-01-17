@@ -7,7 +7,7 @@
     "languages": [
       "en"
     ],
-    "catalog": "catalog_2"
+    "catalog": "EMEA"
   },
   {
     "name": "Italy",
@@ -17,7 +17,7 @@
     "languages": [
       "it"
     ],
-    "catalog": "catalog_2"
+    "catalog": "EMEA"
   },
   {
     "name": "United States",
@@ -27,6 +27,6 @@
     "languages": [
       "en"
     ],
-    "catalog": "catalog_1"
+    "catalog": "AMER"
   }
 ]

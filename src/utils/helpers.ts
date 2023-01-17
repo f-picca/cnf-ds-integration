@@ -53,7 +53,7 @@ export function logger({ who, what }: { who: string; what: OPERATIONS }): void{
       console.log(who + "🚚 getting data from contentful...")
       break;
     case OPERATIONS.write:  
-      console.log(who + "✍️ writing products file...")
+      console.log(who + "✍️ writing file...")
       break;
     case OPERATIONS.done:
       console.log(who + "🍺 done")

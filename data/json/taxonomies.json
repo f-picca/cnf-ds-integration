@@ -1,20 +1,22 @@
 [
   {
-    "id": "taxonomy_2",
-    "name": "Category EMEA",
-    "facetKey": "category",
-    "taxons": [
-      "taxon_2",
-      "taxon_1"
-    ]
-  },
-  {
     "id": "taxonomy_1",
     "name": "Category AMER - default",
     "facetKey": "category",
     "taxons": [
       "taxon_1",
-      "taxon_2"
+      "taxon_2",
+      "All Shirts"
+    ]
+  },
+  {
+    "id": "taxonomy_2",
+    "name": "Category EMEA",
+    "facetKey": "category",
+    "taxons": [
+      "taxon_2",
+      "taxon_1",
+      "All Shirts"
     ]
   }
 ]

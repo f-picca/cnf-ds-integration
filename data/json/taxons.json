@@ -1,5 +1,22 @@
 [
   {
+    "id": "All Shirts",
+    "name": "All Shirts",
+    "label": {
+      "en": "All Shirts",
+      "it": "Tutte Le Magliette"
+    },
+    "description": {
+      "en": "Our Fantastic T-shirts",
+      "it": "Le nostre Fantastiche Magliette"
+    },
+    "slug": "shirts",
+    "references": [
+      "HOODIEMX000000FFFFFFLXXX",
+      "HOODIEMX000000FFFFFFMXXX"
+    ]
+  },
+  {
     "id": "taxon_1",
     "name": "All Accessories",
     "label": {
